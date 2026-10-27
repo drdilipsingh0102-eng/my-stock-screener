@@ -11,10 +11,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Bharat Trade" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%23ea580c'/%3E%3Cpath d='M96 384L224 256l64 64 128-128' stroke='white' stroke-width='44' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='320 192 416 192 416 288' stroke='white' stroke-width='44' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/bullish.png" />
 
-  <!-- Embedded Valid Web App Manifest via Data URI -->
-  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Bharat%20Trade%20NSE%20Screener%22%2C%22short_name%22%3A%22BharatTrade%22%2C%22start_url%22%3A%22.%2F%22%2C%22scope%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23020617%22%2C%22theme_color%22%3A%22%23ea580c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%200%20512%20512'%253E%253Crect%2520width%3D'512'%2520height%3D'512'%2520rx%3D'128'%2520fill%3D'%23ea580c'%2F%253E%253Cpath%2520d%3D'M96%2520384L224%2520256l64%252064%2520128-128'%2520stroke%3D'white'%2520stroke-width%3D'44'%2520fill%3D'none'%2520stroke-linecap%3D'round'%2520stroke-linejoin%3D'round'%2F%253E%253Cpolyline%2520points%3D'320%2520192%2520416%2520192%2520416%2520288'%2520stroke%3D'white'%2520stroke-width%3D'44'%2520fill%3D'none'%2520stroke-linecap%3D'round'%2520stroke-linejoin%3D'round'%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
+  <!-- Manifest via clean valid Data URI with standard web icons -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Bharat%20Trade%20NSE%20Screener%22%2C%22short_name%22%3A%22BharatTrade%22%2C%22start_url%22%3A%22.%2F%22%2C%22scope%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23020617%22%2C%22theme_color%22%3A%22%23ea580c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Ffluency%2F192%2Fbullish.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%2C%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Ffluency%2F512%2Fbullish.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
 
   <style>
     * {
@@ -34,7 +34,6 @@
     }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     
-    /* Layout Container */
     .app-container {
       max-width: 480px;
       margin: 0 auto;
@@ -47,7 +46,6 @@
       border-right: 1px solid #1e293b;
     }
 
-    /* Header */
     header {
       position: sticky;
       top: 0;
@@ -135,14 +133,8 @@
       align-items: center;
       gap: 4px;
       box-shadow: 0 0 12px rgba(234, 88, 12, 0.4);
-      animation: bounceBtn 2s infinite ease-in-out;
-    }
-    @keyframes bounceBtn {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-2px); }
     }
 
-    /* Search & Filter Chips */
     .search-box {
       margin-top: 8px;
       position: relative;
@@ -192,7 +184,6 @@
       font-weight: 700;
     }
 
-    /* Sub-bar */
     .sub-bar {
       display: flex;
       justify-content: space-between;
@@ -213,7 +204,6 @@
       outline: none;
     }
 
-    /* Stock List */
     .stock-list {
       flex: 1;
       padding: 10px 12px 80px 12px;
@@ -290,8 +280,32 @@
     .up { color: #10b981; }
     .down { color: #f43f5e; }
 
+    /* ACTIONABLE BUY RANGE AND SL/TARGET STRIP */
+    .trade-setup-strip {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+    }
+    .buy-range-tag {
+      color: #38bdf8;
+      font-weight: 800;
+    }
+    .sl-tgt-tag {
+      color: #94a3b8;
+      font-size: 10px;
+    }
+    .sl-tgt-tag strong {
+      color: #f8fafc;
+    }
+
     .card-bottom {
-      margin-top: 10px;
+      margin-top: 8px;
       padding-top: 8px;
       border-top: 1px solid #1e293b;
       display: flex;
@@ -305,29 +319,6 @@
       color: #64748b;
     }
     .card-metrics span strong { color: #cbd5e1; }
-
-    /* Buy Zone & Trade Setup Badge Styles */
-    .trade-setup-strip {
-      margin-top: 8px;
-      padding: 6px 8px;
-      background: #020617;
-      border: 1px solid #1e293b;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 10px;
-    }
-    .buy-range-tag {
-      color: #38bdf8;
-      font-weight: 700;
-    }
-    .sl-tgt-tag {
-      color: #94a3b8;
-    }
-    .sl-tgt-tag strong {
-      color: #f8fafc;
-    }
 
     .badge-signal {
       padding: 2px 7px;
@@ -344,7 +335,6 @@
     .sig-strong-sell { background: #881337; color: #fda4af; border-color: #e11d48; }
     .sig-neutral { background: #1e293b; color: #cbd5e1; border-color: #334155; }
 
-    /* Bottom Nav Bar */
     nav {
       position: fixed;
       bottom: 0;
@@ -377,7 +367,6 @@
     .nav-btn.active { color: #ea580c; font-weight: 800; }
     .nav-btn svg { width: 18px; height: 18px; stroke-width: 2.2; }
 
-    /* Modal / Bottom Sheet */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -438,7 +427,6 @@
     .stat-title { color: #64748b; margin-bottom: 4px; }
     .stat-val { font-size: 13px; font-weight: 800; color: #f8fafc; }
 
-    /* Alerts UI Container */
     .alerts-container {
       padding: 14px;
       display: flex;
@@ -487,7 +475,7 @@
               <span class="dot-live"></span>
               <span>NSE Live Feed</span>
               <span>•</span>
-              <span id="stock-count-label">42 Stocks</span>
+              <span id="stock-count-label">41 Stocks</span>
             </div>
           </div>
         </div>
@@ -536,7 +524,7 @@
           <option value="F&O Momentum">F&O Momentum</option>
         </select>
       </div>
-      <div class="mono" id="screened-count-text">Screened: 42</div>
+      <div class="mono" id="screened-count-text">Screened: 41</div>
     </div>
 
     <!-- MAIN CONTENT CONTAINER -->
@@ -550,7 +538,7 @@
       </button>
       <button class="nav-btn" data-tab="watchlist" id="tab-watchlist">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        <span id="watchlist-tab-label">Watchlist</span>
+        <span id="watchlist-tab-label">Watchlist (4)</span>
       </button>
       <button class="nav-btn" data-tab="alerts" id="tab-alerts">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
@@ -656,73 +644,18 @@
     </div>
   </div>
 
-  <!-- INSTALL BOTTOM SHEET GUIDE (IN-APP NATIVE PROMPT) -->
-  <div id="install-guide-modal" class="modal-overlay" style="display: none;">
-    <div class="modal-sheet">
-      <div class="modal-header">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <div class="brand-icon" style="width:28px; height:28px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
-          </div>
-          <div>
-            <div style="font-size:14px; font-weight:800; color:#fff;">Install Bharat Trade App</div>
-            <div style="font-size:10px; color:#94a3b8;">Add to your Phone's Home Screen</div>
-          </div>
-        </div>
-        <button class="close-btn" id="install-close-btn">✕</button>
-      </div>
-      
-      <div style="margin: 12px 0; font-size: 12px; color: #cbd5e1; line-height: 1.6;">
-        <div id="install-guide-chrome" style="background:#020617; border:1px solid #1e293b; padding:12px; border-radius:10px; margin-bottom:10px;">
-          <strong style="color:#ea580c; display:block; margin-bottom:4px;">🤖 Android (Chrome Browser):</strong>
-          1. Tap the <strong>3 vertical dots (⋮)</strong> at Chrome's top-right corner.<br/>
-          2. Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.<br/>
-          3. Tap <strong>Install</strong> to add the icon to your apps drawer.
-        </div>
-        <div id="install-guide-ios" style="background:#020617; border:1px solid #1e293b; padding:12px; border-radius:10px;">
-          <strong style="color:#38bdf8; display:block; margin-bottom:4px;">🍏 iPhone / iPad (Safari Browser):</strong>
-          1. Tap the <strong>Share icon (⎋)</strong> at the bottom center of Safari.<br/>
-          2. Scroll down and tap <strong>"Add to Home Screen"</strong>.<br/>
-          3. Tap <strong>Add</strong> in the top right corner.
-        </div>
-      </div>
-
-      <button id="install-guide-ok-btn" style="width:100%; padding:10px; background:#ea580c; border:none; border-radius:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer;">
-        Got It
-      </button>
-    </div>
-  </div>
-
-  <!-- APPLICATION LOGIC (PURE HIGH-SPEED ES6 + INLINE PWA SERVICE WORKER) -->
+  <!-- APPLICATION LOGIC WITH NATIVE SERVICE WORKER -->
   <script>
-    // ----------------------------------------------------
-    // INLINE SERVICE WORKER (Strict Requirement for Chrome PWA Installation)
-    // ----------------------------------------------------
+    // Register separate sw.js file so Chrome validates PWA installability
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        const swScript = `
-          const CACHE_NAME = 'bharat-trade-v1';
-          self.addEventListener('install', (e) => {
-            self.skipWaiting();
-          });
-          self.addEventListener('activate', (e) => {
-            e.waitUntil(clients.claim());
-          });
-          self.addEventListener('fetch', (e) => {
-            e.respondWith(
-              fetch(e.request).catch(() => caches.match(e.request))
-            );
-          });
-        `;
-        const blob = new Blob([swScript], { type: 'application/javascript' });
-        const swUrl = URL.createObjectURL(blob);
-        navigator.serviceWorker.register(swUrl)
-          .then(() => console.log('PWA Service Worker successfully registered'))
-          .catch(err => console.log('Service Worker setup bypassed:', err));
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('SW Registered successfully:', reg.scope))
+          .catch((err) => console.log('SW registration error:', err));
       });
     }
 
-    // 1. Initial Dataset (Nifty 50 + Bank Nifty + F&O Momentum)
+    // Comprehensive Indian Stock Universe (41 Stocks)
     const STOCKS_DATA = [
       { symbol: 'RELIANCE', name: 'Reliance Industries', sector: 'Energy & Oil', base: 2980.50, index: 'Nifty 50', lotSize: 250, pe: 28.4, deliveryPct: 54.2 },
       { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT Services', base: 4120.00, index: 'Nifty 50', lotSize: 175, pe: 31.8, deliveryPct: 62.1 },
@@ -767,7 +700,6 @@
       { symbol: 'POLYCAB', name: 'Polycab India', sector: 'Infrastructure', base: 6720.00, index: 'F&O Momentum', lotSize: 100, pe: 49.2, deliveryPct: 54.7 }
     ];
 
-    // Helper functions
     function makeCandles(base, count = 18) {
       const arr = [];
       let c = base * 0.99;
@@ -797,36 +729,21 @@
 
     // Dynamic Calculation of Actionable Buy Range, Stop Loss, and Targets
     function calculateTradeLevels(price, low, high, vwap) {
-      // Intraday buffer around dynamic support / VWAP
       const pivot = (high + low + price) / 3;
       const s1 = 2 * pivot - high;
-      const r1 = 2 * pivot - low;
-      
       const atrEstimate = Math.max(price * 0.008, (high - low) * 0.7);
       
-      // Recommended entry range (buying near pullbacks or strong momentum above VWAP)
       const buyMin = +(Math.min(price * 0.994, Math.max(s1, vwap * 0.998))).toFixed(2);
       const buyMax = +(Math.max(price * 1.002, price)).toFixed(2);
-      
-      // Stop Loss strictly placed under local support or entry buffer (1 - 1.2% risk)
       const stopLoss = +(buyMin - atrEstimate * 0.9).toFixed(2);
       
-      // Targets calculated for 1:1.5 and 1:2.5 Risk-to-Reward
       const riskPerShare = Math.max(price * 0.006, buyMax - stopLoss);
       const target1 = +(buyMax + riskPerShare * 1.5).toFixed(2);
       const target2 = +(buyMax + riskPerShare * 2.5).toFixed(2);
       
-      return {
-        buyMin,
-        buyMax,
-        stopLoss,
-        target1,
-        target2,
-        rrRatio: '1:2.0'
-      };
+      return { buyMin, buyMax, stopLoss, target1, target2, rrRatio: '1:2.0' };
     }
 
-    // State
     let stocks = STOCKS_DATA.map(s => {
       const changePct = +(Math.random() * 3.6 - 1.6).toFixed(2);
       const price = +(s.base * (1 + changePct / 100)).toFixed(2);
@@ -861,9 +778,8 @@
     let searchQuery = '';
     let watchlist = ['RELIANCE', 'HDFCBANK', 'TCS', 'TATAMOTORS'];
     let selectedStock = null;
-    let deferredInstallPrompt = null;
+    let deferredPrompt = null;
 
-    // Elements
     const stockContainer = document.getElementById('stock-list-container');
     const screenedCountText = document.getElementById('screened-count-text');
     const toggleStreamBtn = document.getElementById('toggle-stream-btn');
@@ -872,16 +788,13 @@
     const indexSelect = document.getElementById('index-select');
     const presetChips = document.querySelectorAll('.chip');
     const modalEl = document.getElementById('stock-modal');
-    const installGuideModal = document.getElementById('install-guide-modal');
 
-    // Render Function
     function render() {
       if (activeTab === 'alerts') {
         renderAlertsView();
         return;
       }
 
-      // Filter list
       const filtered = stocks.filter(s => {
         if (activeTab === 'watchlist' && !watchlist.includes(s.symbol)) return false;
         if (searchQuery && !s.symbol.toLowerCase().includes(searchQuery.toLowerCase()) && !s.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
@@ -938,7 +851,7 @@
               </div>
             </div>
 
-            <!-- Actionable Purchase Range Strip -->
+            <!-- ACTIONABLE BUY RANGE AND SL/TGT STRIP -->
             <div class="trade-setup-strip mono">
               <span class="buy-range-tag">Buy: ₹${tl.buyMin} - ₹${tl.buyMax}</span>
               <span class="sl-tgt-tag">SL: <strong>₹${tl.stopLoss}</strong> | TGT: <strong>₹${tl.target1}</strong></span>
@@ -985,13 +898,6 @@
             </div>
             <span style="color:#10b981; font-weight:700; font-size:11px;">ACTIVE</span>
           </div>
-          <div class="alert-card">
-            <div>
-              <strong style="color:#fff;">HDFCBANK</strong>
-              <div style="color:#94a3b8; font-size:10px;">Alert when RSI &lt; 35 (Oversold)</div>
-            </div>
-            <span style="color:#10b981; font-weight:700; font-size:11px;">ACTIVE</span>
-          </div>
         </div>
       `;
     }
@@ -1000,10 +906,6 @@
       const stock = document.getElementById('alert-stock-select').value;
       const pr = document.getElementById('alert-price-input').value;
       if (!pr) return;
-      const guideSheet = document.getElementById('install-guide-modal');
-      const okBtn = document.getElementById('install-guide-ok-btn');
-      
-      // Feedback confirmation
       alertNotification(`Alert saved for ${stock} at ₹${pr}!`);
       document.getElementById('alert-price-input').value = '';
     };
@@ -1060,7 +962,6 @@
       document.getElementById('modal-delivery').textContent = selectedStock.deliveryPct + '%';
       document.getElementById('modal-lotsize').textContent = selectedStock.lotSize + ' Qty';
 
-      // Set Actionable Buy Range, Stop Loss, and Targets
       const tl = selectedStock.tradeLevels;
       document.getElementById('modal-buy-range').textContent = `₹${tl.buyMin} - ₹${tl.buyMax}`;
       document.getElementById('modal-sl').textContent = `₹${tl.stopLoss}`;
@@ -1068,7 +969,6 @@
       document.getElementById('modal-t2').textContent = `₹${tl.target2}`;
       document.getElementById('modal-rr-ratio').textContent = `R:R ${tl.rrRatio}`;
 
-      // Pivots
       const h = selectedStock.high, l = selectedStock.low, c = selectedStock.price;
       const pp = +((h + l + c) / 3).toFixed(2);
       const r1 = +(2 * pp - l).toFixed(2);
@@ -1077,7 +977,6 @@
       document.getElementById('modal-r1').textContent = '₹' + r1;
       document.getElementById('modal-s1').textContent = '₹' + s1;
 
-      // Draw SVG Candlestick
       const svg = document.getElementById('candlestick-svg');
       const candles = selectedStock.candles;
       const minP = Math.min(...candles.map(c => c.low));
@@ -1112,18 +1011,6 @@
     document.getElementById('modal-dismiss-btn').onclick = closeModal;
     modalEl.onclick = (e) => { if (e.target === modalEl) closeModal(); };
 
-    // Install Guide Modal Controls
-    function openInstallGuide() {
-      installGuideModal.style.display = 'flex';
-    }
-    function closeInstallGuide() {
-      installGuideModal.style.display = 'none';
-    }
-    document.getElementById('install-close-btn').onclick = closeInstallGuide;
-    document.getElementById('install-guide-ok-btn').onclick = closeInstallGuide;
-    installGuideModal.onclick = (e) => { if (e.target === installGuideModal) closeInstallGuide(); };
-
-    // Preset & Search Listeners
     presetChips.forEach(chip => {
       chip.addEventListener('click', () => {
         presetChips.forEach(c => c.classList.remove('active'));
@@ -1143,7 +1030,6 @@
       render();
     });
 
-    // Navigation Tabs
     const navButtons = document.querySelectorAll('.nav-btn');
     navButtons.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1154,13 +1040,13 @@
       });
     });
 
-    // Live Stream Simulator
     toggleStreamBtn.onclick = () => {
       isLive = !isLive;
       toggleStreamBtn.textContent = isLive ? 'LIVE' : 'PAUSED';
       toggleStreamBtn.className = isLive ? 'btn-live' : 'btn-live btn-paused';
     };
 
+    // Live Tick Updates
     setInterval(() => {
       if (!isLive) return;
       const count = Math.floor(Math.random() * 3) + 2;
@@ -1212,39 +1098,27 @@
       }
     }, 1200);
 
-    // ----------------------------------------------------
-    // ROBUST PWA INSTALLATION TRIGGER
-    // ----------------------------------------------------
+    // Chrome PWA Install Prompt Handler
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Prevent automatic mini-infobar so our custom install button triggers the native prompt
       e.preventDefault();
-      deferredInstallPrompt = e;
+      deferredPrompt = e;
       installBtn.style.display = 'flex';
     });
 
-    window.addEventListener('appinstalled', () => {
-      deferredInstallPrompt = null;
-      installBtn.style.display = 'none';
-      alertNotification('Bharat Trade installed successfully!');
-    });
-
     installBtn.onclick = () => {
-      if (deferredInstallPrompt) {
-        // Trigger native Chrome install dialogue
-        deferredInstallPrompt.prompt();
-        deferredInstallPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the PWA install prompt');
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            console.log('Bharat Trade PWA installed');
           }
-          deferredInstallPrompt = null;
+          deferredPrompt = null;
         });
       } else {
-        // Fallback in-app guide if Chrome hasn't fired beforeinstallprompt yet or on iOS Safari
-        openInstallGuide();
+        alertNotification('Tap 3 dots (⋮) in Chrome > "Add to Home screen"');
       }
     };
 
-    // First render
     render();
   </script>
 </body>
