@@ -280,7 +280,7 @@
     .up { color: #10b981; }
     .down { color: #f43f5e; }
 
-    /* ACTIONABLE BUY RANGE AND SL/TARGET STRIP */
+    /* ACTIONABLE TRADE SETUP STRIP (Direction-Aware) */
     .trade-setup-strip {
       margin-top: 8px;
       padding: 6px 10px;
@@ -292,10 +292,14 @@
       align-items: center;
       font-size: 11px;
     }
-    .buy-range-tag {
-      color: #38bdf8;
-      font-weight: 800;
-    }
+    .trade-setup-strip.strip-buy { border-left: 3px solid #38bdf8; }
+    .trade-setup-strip.strip-sell { border-left: 3px solid #f43f5e; }
+    .trade-setup-strip.strip-neutral { border-left: 3px solid #94a3b8; }
+    
+    .range-tag-buy { color: #38bdf8; font-weight: 800; }
+    .range-tag-sell { color: #fda4af; font-weight: 800; }
+    .range-tag-neutral { color: #cbd5e1; font-weight: 700; }
+    
     .sl-tgt-tag {
       color: #94a3b8;
       font-size: 10px;
@@ -596,27 +600,27 @@
         </div>
       </div>
 
-      <!-- Trade Setup Box (Buy Range, SL, Target) -->
-      <div class="stat-box" style="margin-bottom:12px; border-color:#0284c7; background:#082f4922;">
-        <div class="stat-title" style="color:#38bdf8; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
-          <span>🎯 ACTIONABLE TRADE SETUP</span>
+      <!-- Trade Setup Box (Direction-Aware) -->
+      <div id="modal-setup-box" class="stat-box" style="margin-bottom:12px; border-color:#0284c7; background:#082f4922;">
+        <div class="stat-title" style="display:flex; justify-content:space-between; align-items:center;">
+          <span id="modal-setup-title" style="font-weight:bold; color:#38bdf8;">🎯 ACTIONABLE TRADE SETUP</span>
           <span id="modal-rr-ratio" style="font-size:10px; color:#a5f3fc; background:#0369a1; padding:2px 6px; border-radius:4px;">R:R 1:2.0</span>
         </div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;" class="mono">
           <div style="background:#020617; padding:8px; border-radius:8px; border:1px solid #1e293b;">
-            <div style="font-size:10px; color:#94a3b8;">Ideal Buy Range</div>
-            <div id="modal-buy-range" style="color:#38bdf8; font-weight:800; font-size:12px; margin-top:2px;">₹0 - ₹0</div>
+            <div id="modal-entry-label" style="font-size:10px; color:#94a3b8;">Ideal Entry Range</div>
+            <div id="modal-entry-range" style="color:#38bdf8; font-weight:800; font-size:12px; margin-top:2px;">₹0 - ₹0</div>
           </div>
           <div style="background:#020617; padding:8px; border-radius:8px; border:1px solid #1e293b;">
-            <div style="font-size:10px; color:#f43f5e;">Stop Loss (SL)</div>
+            <div id="modal-sl-label" style="font-size:10px; color:#f43f5e;">Stop Loss (SL)</div>
             <div id="modal-sl" style="color:#f43f5e; font-weight:800; font-size:12px; margin-top:2px;">₹0.00</div>
           </div>
           <div style="background:#020617; padding:8px; border-radius:8px; border:1px solid #1e293b;">
-            <div style="font-size:10px; color:#10b981;">Target 1 (T1)</div>
+            <div id="modal-t1-label" style="font-size:10px; color:#10b981;">Target 1 (T1)</div>
             <div id="modal-t1" style="color:#10b981; font-weight:800; font-size:12px; margin-top:2px;">₹0.00</div>
           </div>
           <div style="background:#020617; padding:8px; border-radius:8px; border:1px solid #1e293b;">
-            <div style="font-size:10px; color:#34d399;">Target 2 (T2)</div>
+            <div id="modal-t2-label" style="font-size:10px; color:#34d399;">Target 2 (T2)</div>
             <div id="modal-t2" style="color:#34d399; font-weight:800; font-size:12px; margin-top:2px;">₹0.00</div>
           </div>
         </div>
@@ -646,7 +650,6 @@
 
   <!-- APPLICATION LOGIC WITH NATIVE SERVICE WORKER -->
   <script>
-    // Register separate sw.js file so Chrome validates PWA installability
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -727,21 +730,71 @@
       return 'Neutral';
     }
 
-    // Dynamic Calculation of Actionable Buy Range, Stop Loss, and Targets
-    function calculateTradeLevels(price, low, high, vwap) {
+    // Direction-Aware Calculation of Entry Range, Stop Loss, and Targets
+    function calculateTradeLevels(price, low, high, vwap, signal) {
       const pivot = (high + low + price) / 3;
-      const s1 = 2 * pivot - high;
-      const atrEstimate = Math.max(price * 0.008, (high - low) * 0.7);
+      const s1 = +(2 * pivot - high).toFixed(2);
+      const r1 = +(2 * pivot - low).toFixed(2);
+      const atr = Math.max(price * 0.007, (high - low) * 0.65);
       
-      const buyMin = +(Math.min(price * 0.994, Math.max(s1, vwap * 0.998))).toFixed(2);
-      const buyMax = +(Math.max(price * 1.002, price)).toFixed(2);
-      const stopLoss = +(buyMin - atrEstimate * 0.9).toFixed(2);
-      
-      const riskPerShare = Math.max(price * 0.006, buyMax - stopLoss);
-      const target1 = +(buyMax + riskPerShare * 1.5).toFixed(2);
-      const target2 = +(buyMax + riskPerShare * 2.5).toFixed(2);
-      
-      return { buyMin, buyMax, stopLoss, target1, target2, rrRatio: '1:2.0' };
+      const isBullish = signal === 'Strong Buy' || signal === 'Buy';
+      const isBearish = signal === 'Strong Sell' || signal === 'Sell';
+
+      if (isBearish) {
+        // INTRADAY SHORT / SELL SETUP
+        // Sell on minor pullback towards VWAP or R1
+        const entryMin = +(Math.min(price, Math.max(price * 0.998, vwap * 0.998))).toFixed(2);
+        const entryMax = +(Math.max(price * 1.006, vwap * 1.002)).toFixed(2);
+        // Stop loss sits ABOVE entry/resistance
+        const stopLoss = +(Math.max(entryMax + atr * 0.85, r1)).toFixed(2);
+        const risk = Math.max(price * 0.006, stopLoss - entryMin);
+        // Targets sit BELOW entry price
+        const target1 = +(Math.min(s1, entryMin - risk * 1.5)).toFixed(2);
+        const target2 = +(entryMin - risk * 2.5).toFixed(2);
+        return {
+          type: 'SELL',
+          label: 'Sell / Short',
+          entryMin,
+          entryMax,
+          stopLoss,
+          target1,
+          target2,
+          rrRatio: '1:1.8'
+        };
+      } else if (isBullish) {
+        // INTRADAY LONG / BUY SETUP
+        // Buy on dip near VWAP or Support
+        const entryMin = +(Math.min(price * 0.994, Math.max(s1, vwap * 0.998))).toFixed(2);
+        const entryMax = +(Math.max(price * 1.002, price)).toFixed(2);
+        // Stop loss sits BELOW entry
+        const stopLoss = +(Math.min(entryMin - atr * 0.85, s1 - atr * 0.3)).toFixed(2);
+        const risk = Math.max(price * 0.006, entryMax - stopLoss);
+        // Targets sit ABOVE entry
+        const target1 = +(Math.max(r1, entryMax + risk * 1.5)).toFixed(2);
+        const target2 = +(entryMax + risk * 2.5).toFixed(2);
+        return {
+          type: 'BUY',
+          label: 'Ideal Buy',
+          entryMin,
+          entryMax,
+          stopLoss,
+          target1,
+          target2,
+          rrRatio: '1:2.0'
+        };
+      } else {
+        // NEUTRAL / CONSOLIDATION
+        return {
+          type: 'NEUTRAL',
+          label: 'Range Watch',
+          entryMin: +(price * 0.996).toFixed(2),
+          entryMax: +(price * 1.004).toFixed(2),
+          stopLoss: +(price * 0.990).toFixed(2),
+          target1: +(price * 1.012).toFixed(2),
+          target2: +(price * 1.020).toFixed(2),
+          rrRatio: '1:1.5'
+        };
+      }
     }
 
     let stocks = STOCKS_DATA.map(s => {
@@ -753,7 +806,8 @@
       const vwap = +(price * (1 + (Math.random() * 0.006 - 0.003))).toFixed(2);
       const rsi = +(40 + Math.random() * 28).toFixed(1);
       const supertrend = price > vwap ? 'BULL' : 'BEAR';
-      const tradeLevels = calculateTradeLevels(price, low, high, vwap);
+      const signal = calcSignal(rsi, price, vwap);
+      const tradeLevels = calculateTradeLevels(price, low, high, vwap, signal);
       return {
         ...s,
         price,
@@ -764,7 +818,7 @@
         rsi,
         supertrend,
         changePct,
-        signal: calcSignal(rsi, price, vwap),
+        signal,
         tradeLevels,
         tickDir: 0,
         candles: makeCandles(price)
@@ -830,6 +884,16 @@
         const sigSlug = s.signal.toLowerCase().replace(' ', '-');
         const tl = s.tradeLevels;
 
+        let stripClass = 'strip-buy';
+        let rangeClass = 'range-tag-buy';
+        if (tl.type === 'SELL') {
+          stripClass = 'strip-sell';
+          rangeClass = 'range-tag-sell';
+        } else if (tl.type === 'NEUTRAL') {
+          stripClass = 'strip-neutral';
+          rangeClass = 'range-tag-neutral';
+        }
+
         return `
           <div class="stock-card ${flashClass}" onclick="openModal('${s.symbol}')">
             <div class="card-top">
@@ -851,9 +915,9 @@
               </div>
             </div>
 
-            <!-- ACTIONABLE BUY RANGE AND SL/TGT STRIP -->
-            <div class="trade-setup-strip mono">
-              <span class="buy-range-tag">Buy: ₹${tl.buyMin} - ₹${tl.buyMax}</span>
+            <!-- ACTIONABLE DIRECTION-AWARE TRADE STRIP -->
+            <div class="trade-setup-strip mono ${stripClass}">
+              <span class="${rangeClass}">${tl.label}: ₹${tl.entryMin} - ₹${tl.entryMax}</span>
               <span class="sl-tgt-tag">SL: <strong>₹${tl.stopLoss}</strong> | TGT: <strong>₹${tl.target1}</strong></span>
             </div>
 
@@ -963,7 +1027,34 @@
       document.getElementById('modal-lotsize').textContent = selectedStock.lotSize + ' Qty';
 
       const tl = selectedStock.tradeLevels;
-      document.getElementById('modal-buy-range').textContent = `₹${tl.buyMin} - ₹${tl.buyMax}`;
+      const isSell = tl.type === 'SELL';
+      const setupBox = document.getElementById('modal-setup-box');
+      const setupTitle = document.getElementById('modal-setup-title');
+      const entryLabel = document.getElementById('modal-entry-label');
+      const entryVal = document.getElementById('modal-entry-range');
+      const slLabel = document.getElementById('modal-sl-label');
+
+      if (isSell) {
+        setupBox.style.borderColor = '#e11d48';
+        setupBox.style.background = '#88133722';
+        setupTitle.textContent = '🔻 ACTIONABLE SHORT / SELL SETUP';
+        setupTitle.style.color = '#fda4af';
+        entryLabel.textContent = 'Short Sell Range';
+        entryLabel.style.color = '#fda4af';
+        entryVal.style.color = '#fda4af';
+        slLabel.textContent = 'Stop Loss (Above Entry)';
+      } else {
+        setupBox.style.borderColor = '#0284c7';
+        setupBox.style.background = '#082f4922';
+        setupTitle.textContent = '🎯 ACTIONABLE BUY SETUP';
+        setupTitle.style.color = '#38bdf8';
+        entryLabel.textContent = 'Ideal Buy Range';
+        entryLabel.style.color = '#94a3b8';
+        entryVal.style.color = '#38bdf8';
+        slLabel.textContent = 'Stop Loss (Below Entry)';
+      }
+
+      entryVal.textContent = `₹${tl.entryMin} - ₹${tl.entryMax}`;
       document.getElementById('modal-sl').textContent = `₹${tl.stopLoss}`;
       document.getElementById('modal-t1').textContent = `₹${tl.target1}`;
       document.getElementById('modal-t2').textContent = `₹${tl.target2}`;
@@ -1063,7 +1154,8 @@
         const newChangePct = +(((newPrice - s.open) / s.open) * 100).toFixed(2);
         const newRsi = +Math.max(15, Math.min(85, s.rsi + (Math.random() * 0.6 - 0.28))).toFixed(1);
         const newVwap = +((s.vwap * 0.998) + (newPrice * 0.002)).toFixed(2);
-        const newTradeLevels = calculateTradeLevels(newPrice, newLow, newHigh, newVwap);
+        const newSignal = calcSignal(newRsi, newPrice, newVwap);
+        const newTradeLevels = calculateTradeLevels(newPrice, newLow, newHigh, newVwap, newSignal);
 
         return {
           ...s,
@@ -1074,7 +1166,7 @@
           rsi: newRsi,
           vwap: newVwap,
           supertrend: newPrice > newVwap ? 'BULL' : 'BEAR',
-          signal: calcSignal(newRsi, newPrice, newVwap),
+          signal: newSignal,
           tradeLevels: newTradeLevels,
           tickDir: delta > 0 ? 1 : delta < 0 ? -1 : 0
         };
@@ -1090,7 +1182,7 @@
           document.getElementById('modal-price').textContent = '₹' + updated.price.toLocaleString('en-IN', { minimumFractionDigits: 2 });
           document.getElementById('modal-vwap').textContent = '₹' + updated.vwap;
           const utl = updated.tradeLevels;
-          document.getElementById('modal-buy-range').textContent = `₹${utl.buyMin} - ₹${utl.buyMax}`;
+          document.getElementById('modal-entry-range').textContent = `₹${utl.entryMin} - ₹${utl.entryMax}`;
           document.getElementById('modal-sl').textContent = `₹${utl.stopLoss}`;
           document.getElementById('modal-t1').textContent = `₹${utl.target1}`;
           document.getElementById('modal-t2').textContent = `₹${utl.target2}`;
