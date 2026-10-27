@@ -3,787 +3,961 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Bharat Trade • Indian Market Screener</title>
-
-  <!-- PWA & Mobile Meta Tags -->
-  <meta name="application-name" content="Bharat Trade" />
+  <title>Bharat Trade - NSE Stock Screener</title>
+  
+  <!-- Mobile & PWA Configuration -->
+  <meta name="theme-color" content="#ea580c" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Bharat Trade" />
-  <meta name="theme-color" content="#020617" />
-  <meta name="mobile-web-app-capable" content="yes" />
-
-  <!-- App Icon as embedded SVG Data URI -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ea580c'/%3E%3Cpath d='M25 65 L45 40 L60 55 L80 25' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpolyline points='65,25 80,25 80,40' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ea580c'/%3E%3Cpath d='M25 65 L45 40 L60 55 L80 25' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpolyline points='65,25 80,25 80,40' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E" />
-
-  <!-- Embedded Web App Manifest -->
-  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Bharat%20Trade%20Screener%22%2C%22short_name%22%3A%22BharatTrade%22%2C%22description%22%3A%22Indian%20Stock%20Market%20%28NSE%2FBSE%29%20Screener%20PWA%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23020617%22%2C%22theme_color%22%3A%22%23020617%22%2C%22orientation%22%3A%22portrait%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%20100%27%253E%253Crect%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2722%27%20fill%3D%27%2523ea580c%27%2F%253E%253Cpath%20d%3D%27M25%2065%20L45%2040%20L60%2055%20L80%2025%27%20stroke%3D%27white%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20fill%3D%27none%27%2F%253E%253Cpolyline%20points%3D%2765%2C25%2080%2C25%2080%2C40%27%20stroke%3D%27white%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%20fill%3D%27none%27%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
-          }
-        }
-      }
-    };
-  </script>
-
-  <!-- React 18, React-DOM & Babel for Standalone In-Browser Execution -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- Lucide Icons (Universal) -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Inline Manifest Data URI (Zero External Files Required) -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Bharat%20Trade%20NSE%20Screener%22%2C%22short_name%22%3A%22BharatTrade%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23020617%22%2C%22theme_color%22%3A%22%23ea580c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%2520viewBox%3D\'0%200%20512%20512\'%2520fill%3D\'%23ea580c\'%253E%253Crect%2520width%3D\'512\'%2520height%3D\'512\'%2520rx%3D\'128\'%2520fill%3D\'%23ea580c\'%2F%253E%253Cpath%2520d%3D\'M96%2520384L224%2520256l64%252064%2520128-128\'%2520stroke%3D\'white\'%2520stroke-width%3D\'40\'%2520fill%3D\'none\'%2520stroke-linecap%3D\'round\'%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%20512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
 
   <style>
-    /* Mobile-first polish, tap targets, safe areas */
-    body {
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+    }
+    body {
       background-color: #020617;
-      overscroll-behavior-y: none;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      padding-bottom: env(safe-area-inset-bottom, 20px);
     }
-    /* Hide scrollbars but allow scrolling */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    
+    /* Layout Container */
+    .app-container {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: #020617;
+      border-left: 1px solid #1e293b;
+      border-right: 1px solid #1e293b;
     }
-    .no-scrollbar {
-      -ms-overflow-style: none;
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #1e293b;
+      padding: 10px 14px;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ea580c, #f59e0b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+    }
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .brand-sub {
+      font-size: 10px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .dot-live {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-live {
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid #059669;
+      background: rgba(6, 78, 59, 0.6);
+      color: #6ee7b7;
+      cursor: pointer;
+    }
+    .btn-paused {
+      border-color: #be123c;
+      background: rgba(136, 19, 55, 0.6);
+      color: #fda4af;
+    }
+    .btn-install {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #ea580c;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Search & Filter Chips */
+    .search-box {
+      margin-top: 8px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 7px 10px 7px 30px;
+      font-size: 12px;
+      color: #fff;
+      outline: none;
+    }
+    .search-box input:focus { border-color: #ea580c; }
+    .search-icon {
+      position: absolute;
+      left: 10px;
+      top: 8px;
+      width: 13px;
+      height: 13px;
+      stroke: #64748b;
+    }
+
+    .preset-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 0 2px 0;
       scrollbar-width: none;
     }
-    /* Bottom safe area for iPhone home bar */
-    .pb-safe {
-      padding-bottom: env(safe-area-inset-bottom, 16px);
+    .preset-chips::-webkit-scrollbar { display: none; }
+    .chip {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      white-space: nowrap;
+      border: 1px solid #334155;
+      background: #090d16;
+      color: #94a3b8;
+      cursor: pointer;
     }
-    .pt-safe {
-      padding-top: env(safe-area-inset-top, 10px);
+    .chip.active {
+      background: #ea580c;
+      color: #fff;
+      border-color: #ea580c;
+      font-weight: 700;
+    }
+
+    /* Sub-bar */
+    .sub-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 14px;
+      background: #0b1120;
+      border-bottom: 1px solid #1e293b;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .sub-bar select {
+      background: #020617;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    /* Stock List */
+    .stock-list {
+      flex: 1;
+      padding: 10px 12px 80px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .stock-card {
+      background: #0b1329;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      cursor: pointer;
+      transition: transform 0.1s, border-color 0.2s, background-color 0.2s;
+    }
+    .stock-card:active { transform: scale(0.98); }
+    .flash-up { border-color: #10b981 !important; background: #064e3b33 !important; }
+    .flash-down { border-color: #f43f5e !important; background: #88133733 !important; }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .stock-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      color: #475569;
+      padding: 2px;
+    }
+    .star-btn.starred { color: #f59e0b; }
+    .stock-sym {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .stock-sector {
+      font-size: 9px;
+      background: #1e293b;
+      color: #94a3b8;
+      padding: 2px 5px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .stock-name {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+      max-width: 170px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .price-col {
+      text-align: right;
+    }
+    .stock-price {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .stock-change {
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .up { color: #10b981; }
+    .down { color: #f43f5e; }
+
+    .card-bottom {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10.5px;
+    }
+    .card-metrics {
+      display: flex;
+      gap: 10px;
+      color: #64748b;
+    }
+    .card-metrics span strong { color: #cbd5e1; }
+    .badge-signal {
+      padding: 2px 7px;
+      border-radius: 20px;
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      border: 1px solid transparent;
+    }
+    .sig-strong-buy { background: #064e3b; color: #6ee7b7; border-color: #059669; }
+    .sig-buy { background: #064e3b88; color: #a7f3d0; border-color: #047857; }
+    .sig-sell { background: #88133788; color: #fecdd3; border-color: #be123c; }
+    .sig-strong-sell { background: #881337; color: #fda4af; border-color: #e11d48; }
+    .sig-neutral { background: #1e293b; color: #cbd5e1; border-color: #334155; }
+
+    /* Bottom Nav Bar */
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      height: 56px;
+      background: rgba(15, 23, 42, 0.98);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid #1e293b;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      z-index: 50;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .nav-btn.active { color: #ea580c; font-weight: 800; }
+    .nav-btn svg { width: 18px; height: 18px; stroke-width: 2.2; }
+
+    /* Modal / Bottom Sheet */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .modal-sheet {
+      background: #0f172a;
+      border-top: 1px solid #334155;
+      border-radius: 20px 20px 0 0;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 16px;
+      padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 20px);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
+    .close-btn {
+      background: #1e293b;
+      border: none;
+      color: #94a3b8;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .chart-container {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat-box {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 11px;
+    }
+    .stat-title { color: #64748b; margin-bottom: 4px; }
+    .stat-val { font-size: 13px; font-weight: 800; color: #f8fafc; }
+
+    /* Alerts UI */
+    .alert-card {
+      background: #0b1329;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .input-field {
+      width: 100%;
+      background: #020617;
+      border: 1px solid #334155;
+      padding: 8px;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 8px;
+      outline: none;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased min-h-screen">
-  <div id="root"></div>
+<body>
 
-  <!-- Service Worker for Offline Launch & PWA Install Prompts -->
+  <div class="app-container">
+    <!-- HEADER -->
+    <header>
+      <div class="top-bar">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+              <polyline points="16 7 22 7 22 13"></polyline>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title">BHARAT TRADE</div>
+            <div class="brand-sub">
+              <span class="dot-live"></span>
+              <span>NSE Live Feed</span>
+              <span>•</span>
+              <span id="stock-count-label">42 Stocks</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button id="toggle-stream-btn" class="btn-live">LIVE</button>
+          <button id="install-pwa-btn" class="btn-install">Install</button>
+        </div>
+      </div>
+
+      <!-- SEARCH BOX -->
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="search-input" placeholder="Search Reliance, Tata, HDFC..." />
+      </div>
+
+      <!-- PRESET CHIPS -->
+      <div class="preset-chips">
+        <button class="chip active" data-preset="All">All Stocks</button>
+        <button class="chip" data-preset="Top Gainers">🚀 Top Gainers</button>
+        <button class="chip" data-preset="Top Losers">📉 Top Losers</button>
+        <button class="chip" data-preset="Above VWAP">⚡ Above VWAP</button>
+        <button class="chip" data-preset="Oversold">💎 RSI &lt; 35</button>
+        <button class="chip" data-preset="High Delivery">📦 Delivery %</button>
+      </div>
+    </header>
+
+    <!-- SUB-BAR -->
+    <div class="sub-bar">
+      <div>
+        <span>Index: </span>
+        <select id="index-select">
+          <option value="All">All Indices</option>
+          <option value="Nifty 50">Nifty 50</option>
+          <option value="Bank Nifty">Bank Nifty</option>
+          <option value="F&O Momentum">F&O Momentum</option>
+        </select>
+      </div>
+      <div class="mono" id="screened-count-text">Screened: 42</div>
+    </div>
+
+    <!-- MAIN LIST CONTENT -->
+    <main class="stock-list" id="stock-list-container"></main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav>
+      <button class="nav-btn active" data-tab="screener" id="tab-screener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Screener</span>
+      </button>
+      <button class="nav-btn" data-tab="watchlist" id="tab-watchlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span id="watchlist-tab-label">Watchlist</span>
+      </button>
+      <button class="nav-btn" data-tab="alerts" id="tab-alerts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span>Alerts</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- INTRADAY BREAKDOWN MODAL -->
+  <div id="stock-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span id="modal-symbol" style="font-size:16px; font-weight:800; color:#fff;">RELIANCE</span>
+            <span id="modal-sector" style="font-size:10px; background:#1e293b; color:#94a3b8; padding:2px 6px; border-radius:4px;">Energy</span>
+          </div>
+          <div id="modal-name" style="font-size:11px; color:#64748b; margin-top:2px;">Reliance Industries Ltd.</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="text-align:right;">
+            <div id="modal-price" class="mono" style="font-size:16px; font-weight:800; color:#fff;">₹2,980.50</div>
+            <div id="modal-change" class="mono" style="font-size:11px; font-weight:700;">+1.45%</div>
+          </div>
+          <button class="close-btn" id="modal-close-btn">✕</button>
+        </div>
+      </div>
+
+      <!-- 15-Min SVG Candlestick -->
+      <div class="chart-container">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:#94a3b8; margin-bottom:8px;">
+          <strong style="color:#cbd5e1;">15-Min Candlesticks</strong>
+          <span id="modal-hl" class="mono">High: ₹0 | Low: ₹0</span>
+        </div>
+        <svg id="candlestick-svg" width="100%" height="110" viewBox="0 0 400 110" preserveAspectRatio="none"></svg>
+      </div>
+
+      <!-- Technical Stats -->
+      <div class="grid-2">
+        <div class="stat-box">
+          <div class="stat-title">Intraday VWAP</div>
+          <div id="modal-vwap" class="stat-val mono" style="color:#f59e0b;">₹0.00</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-title">Supertrend (7, 3)</div>
+          <div id="modal-supertrend" class="stat-val">BULLISH</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-title">Delivery %</div>
+          <div id="modal-delivery" class="stat-val mono">54.2%</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-title">F&O Lot Size</div>
+          <div id="modal-lotsize" class="stat-val mono">250 Qty</div>
+        </div>
+      </div>
+
+      <!-- Pivot Levels -->
+      <div class="stat-box" style="margin-bottom:14px;">
+        <div class="stat-title" style="margin-bottom:8px; font-weight:bold; color:#cbd5e1;">Classic Pivot Levels (NSE)</div>
+        <div style="display:flex; flex-direction:column; gap:5px; font-size:11px;" class="mono">
+          <div style="display:flex; justify-content:space-between; color:#f43f5e;">
+            <span>Resistance 1 (R1)</span><strong id="modal-r1">₹0.00</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; color:#f59e0b; background:#f59e0b22; padding:3px 6px; border-radius:4px;">
+            <span>Pivot Point (PP)</span><strong id="modal-pp">₹0.00</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; color:#10b981;">
+            <span>Support 1 (S1)</span><strong id="modal-s1">₹0.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <button id="modal-dismiss-btn" style="width:100%; padding:10px; background:#ea580c; border:none; border-radius:10px; color:#fff; font-weight:700; font-size:12px; cursor:pointer;">
+        Close Breakdown
+      </button>
+    </div>
+  </div>
+
+  <!-- APPLICATION LOGIC (PURE HIGH-SPEED ES6) -->
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        const swBlob = new Blob([`
-          const CACHE_NAME = 'bharat-trade-cache-v1';
-          self.addEventListener('install', (e) => {
-            self.skipWaiting();
-          });
-          self.addEventListener('activate', (e) => {
-            e.waitUntil(clients.claim());
-          });
-          self.addEventListener('fetch', (e) => {
-            e.respondWith(
-              fetch(e.request).catch(() => caches.match(e.request))
-            );
-          });
-        `], { type: 'application/javascript' });
-        const swUrl = URL.createObjectURL(swBlob);
-        navigator.serviceWorker.register(swUrl).catch(() => {});
-      });
-    }
-  </script>
-
-  <!-- React Mobile Screener App -->
-  <script type="text/babel">
-    const { useState, useEffect, useMemo, useRef } = React;
-
-    // --- FULL INDIAN EQUITIES UNIVERSE (NIFTY 50 + KEY F&O MOVERS) ---
-    const INITIAL_INDIAN_STOCKS = [
-      { symbol: 'RELIANCE', name: 'Reliance Industries', sector: 'Energy & Oil', base: 2980.50, beta: 1.05, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 250, pe: 28.4, deliveryPct: 54.2 },
-      { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT Services', base: 4120.00, beta: 0.82, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 175, pe: 31.8, deliveryPct: 62.1 },
-      { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', sector: 'Banking & Financials', base: 1650.25, beta: 1.12, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 550, pe: 19.5, deliveryPct: 58.7 },
-      { symbol: 'ICICIBANK', name: 'ICICI Bank Ltd.', sector: 'Banking & Financials', base: 1245.80, beta: 1.18, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 700, pe: 18.2, deliveryPct: 64.3 },
-      { symbol: 'INFY', name: 'Infosys Ltd.', sector: 'IT Services', base: 1880.40, beta: 1.02, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 400, pe: 27.6, deliveryPct: 60.5 },
-      { symbol: 'BHARTIARTL', name: 'Bharti Airtel', sector: 'Telecom', base: 1675.00, beta: 0.78, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 475, pe: 54.1, deliveryPct: 51.0 },
-      { symbol: 'SBIN', name: 'State Bank of India', sector: 'Banking & Financials', base: 825.60, beta: 1.25, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 1500, pe: 10.8, deliveryPct: 48.2 },
-      { symbol: 'ITC', name: 'ITC Ltd.', sector: 'FMCG', base: 512.40, beta: 0.65, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1600, pe: 29.3, deliveryPct: 66.8 },
-      { symbol: 'LT', name: 'Larsen & Toubro', sector: 'Infrastructure', base: 3620.00, beta: 1.15, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 175, pe: 34.5, deliveryPct: 49.3 },
-      { symbol: 'HINDUNILVR', name: 'Hindustan Unilever', sector: 'FMCG', base: 2680.00, beta: 0.68, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 300, pe: 58.2, deliveryPct: 65.4 },
-      { symbol: 'TATAMOTORS', name: 'Tata Motors Ltd.', sector: 'Automobile', base: 985.30, beta: 1.45, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 575, pe: 11.2, deliveryPct: 42.5 },
-      { symbol: 'MARUTI', name: 'Maruti Suzuki', sector: 'Automobile', base: 12450.00, beta: 0.95, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 50, pe: 26.7, deliveryPct: 55.4 },
-      { symbol: 'SUNPHARMA', name: 'Sun Pharma', sector: 'Pharma', base: 1860.00, beta: 0.72, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 350, pe: 36.4, deliveryPct: 58.2 },
-      { symbol: 'TATASTEEL', name: 'Tata Steel', sector: 'Metals & Mining', base: 156.40, beta: 1.38, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 5500, pe: 38.1, deliveryPct: 41.6 },
-      { symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', sector: 'Banking & Financials', base: 1795.00, beta: 0.98, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 400, pe: 21.0, deliveryPct: 59.0 },
-      { symbol: 'AXISBANK', name: 'Axis Bank Ltd.', sector: 'Banking & Financials', base: 1180.00, beta: 1.22, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 625, pe: 13.8, deliveryPct: 52.4 },
-      { symbol: 'BAJFINANCE', name: 'Bajaj Finance', sector: 'Banking & Financials', base: 7320.00, beta: 1.32, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 125, pe: 32.5, deliveryPct: 47.9 },
-      { symbol: 'NTPC', name: 'NTPC Ltd.', sector: 'Power', base: 420.50, beta: 0.92, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1500, pe: 17.6, deliveryPct: 56.1 },
-      { symbol: 'POWERGRID', name: 'Power Grid Corp', sector: 'Power', base: 345.00, beta: 0.74, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1800, pe: 19.8, deliveryPct: 67.2 },
-      { symbol: 'ONGC', name: 'ONGC Ltd.', sector: 'Energy & Oil', base: 295.00, beta: 1.10, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 2250, pe: 8.5, deliveryPct: 48.7 },
-      { symbol: 'COALINDIA', name: 'Coal India Ltd.', sector: 'Metals & Mining', base: 510.00, beta: 1.05, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1050, pe: 9.1, deliveryPct: 50.4 },
-      { symbol: 'TITAN', name: 'Titan Company', sector: 'Consumer & Retail', base: 3580.00, beta: 1.08, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 175, pe: 86.4, deliveryPct: 52.8 },
-      { symbol: 'ADANIENT', name: 'Adani Enterprises', sector: 'Conglomerate', base: 3050.00, beta: 1.85, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 300, pe: 98.2, deliveryPct: 34.6 },
-      { symbol: 'ADANIPORTS', name: 'Adani Ports & SEZ', sector: 'Infrastructure', base: 1420.00, beta: 1.34, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 400, pe: 32.7, deliveryPct: 45.2 },
-      { symbol: 'M&M', name: 'Mahindra & Mahindra', sector: 'Automobile', base: 2920.00, beta: 1.20, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 350, pe: 30.5, deliveryPct: 53.6 },
-      { symbol: 'HCLTECH', name: 'HCL Technologies', sector: 'IT Services', base: 1820.00, beta: 0.88, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 350, pe: 26.8, deliveryPct: 63.4 },
-      { symbol: 'WIPRO', name: 'Wipro Ltd.', sector: 'IT Services', base: 540.00, beta: 0.95, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1500, pe: 23.4, deliveryPct: 59.8 },
-      { symbol: 'JSWSTEEL', name: 'JSW Steel Ltd.', sector: 'Metals & Mining', base: 995.00, beta: 1.30, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 675, pe: 29.8, deliveryPct: 44.5 },
-      { symbol: 'HINDALCO', name: 'Hindalco Industries', sector: 'Metals & Mining', base: 730.00, beta: 1.42, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1400, pe: 16.4, deliveryPct: 43.1 },
-      { symbol: 'CIPLA', name: 'Cipla Ltd.', sector: 'Pharma', base: 1610.00, beta: 0.68, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 650, pe: 28.5, deliveryPct: 58.7 },
-      { symbol: 'DRREDDY', name: 'Dr. Reddys Labs', sector: 'Pharma', base: 6650.00, beta: 0.75, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 125, pe: 20.3, deliveryPct: 55.8 },
-      { symbol: 'EICHERMOT', name: 'Eicher Motors', sector: 'Automobile', base: 4880.00, beta: 1.02, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 175, pe: 31.4, deliveryPct: 51.2 },
-      { symbol: 'BPCL', name: 'BPCL', sector: 'Energy & Oil', base: 350.00, beta: 1.18, mcap: 'Large Cap', index: 'Nifty 50', lotSize: 1800, pe: 8.8, deliveryPct: 47.1 },
-      { symbol: 'PNB', name: 'Punjab National Bank', sector: 'Banking & Financials', base: 112.50, beta: 1.45, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 8000, pe: 9.2, deliveryPct: 41.5 },
-      { symbol: 'BANKBARODA', name: 'Bank of Baroda', sector: 'Banking & Financials', base: 254.00, beta: 1.38, mcap: 'Large Cap', index: 'Bank Nifty', lotSize: 2925, pe: 6.8, deliveryPct: 47.2 },
-      { symbol: 'AUBANK', name: 'AU Small Finance Bank', sector: 'Banking & Financials', base: 645.00, beta: 1.25, mcap: 'Mid Cap', index: 'Bank Nifty', lotSize: 1000, pe: 24.5, deliveryPct: 43.8 },
-      { symbol: 'FEDERALBNK', name: 'Federal Bank', sector: 'Banking & Financials', base: 198.50, beta: 1.18, mcap: 'Mid Cap', index: 'Bank Nifty', lotSize: 5000, pe: 11.4, deliveryPct: 53.6 },
-      { symbol: 'ZOMATO', name: 'Zomato Ltd.', sector: 'Consumer Tech', base: 268.50, beta: 1.62, mcap: 'Mid Cap', index: 'F&O Momentum', lotSize: 2000, pe: 95.0, deliveryPct: 38.4 },
-      { symbol: 'HAL', name: 'Hindustan Aeronautics', sector: 'Defense', base: 4560.00, beta: 1.28, mcap: 'Large Cap', index: 'F&O Momentum', lotSize: 150, pe: 38.8, deliveryPct: 45.1 },
-      { symbol: 'BEL', name: 'Bharat Electronics', sector: 'Defense', base: 295.00, beta: 1.20, mcap: 'Large Cap', index: 'F&O Momentum', lotSize: 2850, pe: 46.5, deliveryPct: 51.4 },
-      { symbol: 'DIXON', name: 'Dixon Technologies', sector: 'Electronics', base: 14200.00, beta: 1.55, mcap: 'Mid Cap', index: 'F&O Momentum', lotSize: 50, pe: 88.5, deliveryPct: 35.2 },
-      { symbol: 'TRENT', name: 'Trent Ltd.', sector: 'Consumer & Retail', base: 7850.00, beta: 1.48, mcap: 'Large Cap', index: 'F&O Momentum', lotSize: 100, pe: 145.0, deliveryPct: 46.3 },
-      { symbol: 'BSE', name: 'BSE Ltd.', sector: 'Banking & Financials', base: 4650.00, beta: 1.70, mcap: 'Mid Cap', index: 'F&O Momentum', lotSize: 125, pe: 58.0, deliveryPct: 39.8 },
-      { symbol: 'POLYCAB', name: 'Polycab India', sector: 'Infrastructure', base: 6720.00, beta: 1.15, mcap: 'Large Cap', index: 'F&O Momentum', lotSize: 100, pe: 49.2, deliveryPct: 54.7 }
+    // 1. Initial Dataset (Nifty 50 + Bank Nifty + F&O Momentum)
+    const STOCKS_DATA = [
+      { symbol: 'RELIANCE', name: 'Reliance Industries', sector: 'Energy & Oil', base: 2980.50, index: 'Nifty 50', lotSize: 250, pe: 28.4, deliveryPct: 54.2 },
+      { symbol: 'TCS', name: 'Tata Consultancy Services', sector: 'IT Services', base: 4120.00, index: 'Nifty 50', lotSize: 175, pe: 31.8, deliveryPct: 62.1 },
+      { symbol: 'HDFCBANK', name: 'HDFC Bank Ltd.', sector: 'Banking', base: 1650.25, index: 'Bank Nifty', lotSize: 550, pe: 19.5, deliveryPct: 58.7 },
+      { symbol: 'ICICIBANK', name: 'ICICI Bank Ltd.', sector: 'Banking', base: 1245.80, index: 'Bank Nifty', lotSize: 700, pe: 18.2, deliveryPct: 64.3 },
+      { symbol: 'INFY', name: 'Infosys Ltd.', sector: 'IT Services', base: 1880.40, index: 'Nifty 50', lotSize: 400, pe: 27.6, deliveryPct: 60.5 },
+      { symbol: 'BHARTIARTL', name: 'Bharti Airtel', sector: 'Telecom', base: 1675.00, index: 'Nifty 50', lotSize: 475, pe: 54.1, deliveryPct: 51.0 },
+      { symbol: 'SBIN', name: 'State Bank of India', sector: 'Banking', base: 825.60, index: 'Bank Nifty', lotSize: 1500, pe: 10.8, deliveryPct: 48.2 },
+      { symbol: 'ITC', name: 'ITC Ltd.', sector: 'FMCG', base: 512.40, index: 'Nifty 50', lotSize: 1600, pe: 29.3, deliveryPct: 66.8 },
+      { symbol: 'LT', name: 'Larsen & Toubro', sector: 'Infrastructure', base: 3620.00, index: 'Nifty 50', lotSize: 175, pe: 34.5, deliveryPct: 49.3 },
+      { symbol: 'HINDUNILVR', name: 'Hindustan Unilever', sector: 'FMCG', base: 2680.00, index: 'Nifty 50', lotSize: 300, pe: 58.2, deliveryPct: 65.4 },
+      { symbol: 'TATAMOTORS', name: 'Tata Motors', sector: 'Automobile', base: 985.30, index: 'Nifty 50', lotSize: 575, pe: 11.2, deliveryPct: 42.5 },
+      { symbol: 'MARUTI', name: 'Maruti Suzuki', sector: 'Automobile', base: 12450.00, index: 'Nifty 50', lotSize: 50, pe: 26.7, deliveryPct: 55.4 },
+      { symbol: 'SUNPHARMA', name: 'Sun Pharma', sector: 'Pharma', base: 1860.00, index: 'Nifty 50', lotSize: 350, pe: 36.4, deliveryPct: 58.2 },
+      { symbol: 'TATASTEEL', name: 'Tata Steel', sector: 'Metals', base: 156.40, index: 'Nifty 50', lotSize: 5500, pe: 38.1, deliveryPct: 41.6 },
+      { symbol: 'KOTAKBANK', name: 'Kotak Mahindra Bank', sector: 'Banking', base: 1795.00, index: 'Bank Nifty', lotSize: 400, pe: 21.0, deliveryPct: 59.0 },
+      { symbol: 'AXISBANK', name: 'Axis Bank', sector: 'Banking', base: 1180.00, index: 'Bank Nifty', lotSize: 625, pe: 13.8, deliveryPct: 52.4 },
+      { symbol: 'BAJFINANCE', name: 'Bajaj Finance', sector: 'Financials', base: 7320.00, index: 'Nifty 50', lotSize: 125, pe: 32.5, deliveryPct: 47.9 },
+      { symbol: 'NTPC', name: 'NTPC Ltd.', sector: 'Power', base: 420.50, index: 'Nifty 50', lotSize: 1500, pe: 17.6, deliveryPct: 56.1 },
+      { symbol: 'POWERGRID', name: 'Power Grid Corp', sector: 'Power', base: 345.00, index: 'Nifty 50', lotSize: 1800, pe: 19.8, deliveryPct: 67.2 },
+      { symbol: 'TITAN', name: 'Titan Company', sector: 'Retail', base: 3580.00, index: 'Nifty 50', lotSize: 175, pe: 86.4, deliveryPct: 52.8 },
+      { symbol: 'ADANIENT', name: 'Adani Enterprises', sector: 'Conglomerate', base: 3050.00, index: 'Nifty 50', lotSize: 300, pe: 98.2, deliveryPct: 34.6 },
+      { symbol: 'ADANIPORTS', name: 'Adani Ports', sector: 'Infrastructure', base: 1420.00, index: 'Nifty 50', lotSize: 400, pe: 32.7, deliveryPct: 45.2 },
+      { symbol: 'M&M', name: 'Mahindra & Mahindra', sector: 'Automobile', base: 2920.00, index: 'Nifty 50', lotSize: 350, pe: 30.5, deliveryPct: 53.6 },
+      { symbol: 'HCLTECH', name: 'HCL Tech', sector: 'IT Services', base: 1820.00, index: 'Nifty 50', lotSize: 350, pe: 26.8, deliveryPct: 63.4 },
+      { symbol: 'WIPRO', name: 'Wipro Ltd.', sector: 'IT Services', base: 540.00, index: 'Nifty 50', lotSize: 1500, pe: 23.4, deliveryPct: 59.8 },
+      { symbol: 'JSWSTEEL', name: 'JSW Steel', sector: 'Metals', base: 995.00, index: 'Nifty 50', lotSize: 675, pe: 29.8, deliveryPct: 44.5 },
+      { symbol: 'HINDALCO', name: 'Hindalco', sector: 'Metals', base: 730.00, index: 'Nifty 50', lotSize: 1400, pe: 16.4, deliveryPct: 43.1 },
+      { symbol: 'CIPLA', name: 'Cipla Ltd.', sector: 'Pharma', base: 1610.00, index: 'Nifty 50', lotSize: 650, pe: 28.5, deliveryPct: 58.7 },
+      { symbol: 'DRREDDY', name: 'Dr. Reddys Labs', sector: 'Pharma', base: 6650.00, index: 'Nifty 50', lotSize: 125, pe: 20.3, deliveryPct: 55.8 },
+      { symbol: 'BPCL', name: 'BPCL', sector: 'Energy & Oil', base: 350.00, index: 'Nifty 50', lotSize: 1800, pe: 8.8, deliveryPct: 47.1 },
+      { symbol: 'PNB', name: 'Punjab National Bank', sector: 'Banking', base: 112.50, index: 'Bank Nifty', lotSize: 8000, pe: 9.2, deliveryPct: 41.5 },
+      { symbol: 'BANKBARODA', name: 'Bank of Baroda', sector: 'Banking', base: 254.00, index: 'Bank Nifty', lotSize: 2925, pe: 6.8, deliveryPct: 47.2 },
+      { symbol: 'AUBANK', name: 'AU Small Finance Bank', sector: 'Banking', base: 645.00, index: 'Bank Nifty', lotSize: 1000, pe: 24.5, deliveryPct: 43.8 },
+      { symbol: 'FEDERALBNK', name: 'Federal Bank', sector: 'Banking', base: 198.50, index: 'Bank Nifty', lotSize: 5000, pe: 11.4, deliveryPct: 53.6 },
+      { symbol: 'ZOMATO', name: 'Zomato Ltd.', sector: 'Consumer Tech', base: 268.50, index: 'F&O Momentum', lotSize: 2000, pe: 95.0, deliveryPct: 38.4 },
+      { symbol: 'HAL', name: 'Hindustan Aeronautics', sector: 'Defense', base: 4560.00, index: 'F&O Momentum', lotSize: 150, pe: 38.8, deliveryPct: 45.1 },
+      { symbol: 'BEL', name: 'Bharat Electronics', sector: 'Defense', base: 295.00, index: 'F&O Momentum', lotSize: 2850, pe: 46.5, deliveryPct: 51.4 },
+      { symbol: 'DIXON', name: 'Dixon Technologies', sector: 'Electronics', base: 14200.00, index: 'F&O Momentum', lotSize: 50, pe: 88.5, deliveryPct: 35.2 },
+      { symbol: 'TRENT', name: 'Trent Ltd.', sector: 'Retail', base: 7850.00, index: 'F&O Momentum', lotSize: 100, pe: 145.0, deliveryPct: 46.3 },
+      { symbol: 'BSE', name: 'BSE Ltd.', sector: 'Financials', base: 4650.00, index: 'F&O Momentum', lotSize: 125, pe: 58.0, deliveryPct: 39.8 },
+      { symbol: 'POLYCAB', name: 'Polycab India', sector: 'Infrastructure', base: 6720.00, index: 'F&O Momentum', lotSize: 100, pe: 49.2, deliveryPct: 54.7 }
     ];
 
-    // Synthetic Candles generator
-    const generateCandles = (basePrice, count = 24) => {
-      const candles = [];
-      let curr = basePrice * (1 - count * 0.001);
-      const now = Date.now();
+    // Helper functions
+    function makeCandles(base, count = 18) {
+      const arr = [];
+      let c = base * 0.99;
       for (let i = 0; i < count; i++) {
-        const time = new Date(now - (count - i) * 15 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const delta = (Math.random() - 0.48) * (curr * 0.004);
-        const open = curr;
-        const close = +(curr + delta).toFixed(2);
-        const high = +(Math.max(open, close) + Math.random() * (curr * 0.0025)).toFixed(2);
-        const low = +(Math.min(open, close) - Math.random() * (curr * 0.0025)).toFixed(2);
-        curr = close;
-        candles.push({ time, open, high, low, close });
+        const delta = (Math.random() - 0.48) * (c * 0.004);
+        const open = c;
+        const close = +(c + delta).toFixed(2);
+        const high = +(Math.max(open, close) + Math.random() * (c * 0.002)).toFixed(2);
+        const low = +(Math.min(open, close) - Math.random() * (c * 0.002)).toFixed(2);
+        c = close;
+        arr.push({ open, high, low, close });
       }
-      return candles;
-    };
+      return arr;
+    }
 
-    const evaluateSignal = (rsi, price, vwap, ema20, supertrendDir) => {
+    function calcSignal(rsi, price, vwap) {
       let score = 0;
       if (rsi > 60) score += 1;
       if (rsi < 40) score -= 1;
       if (price > vwap) score += 1.5; else score -= 1.5;
-      if (price > ema20) score += 1; else score -= 1;
-      if (supertrendDir === 'BULL') score += 1.5; else score -= 1.5;
-      if (score >= 3) return 'Strong Buy';
-      if (score >= 1) return 'Buy';
-      if (score <= -3) return 'Strong Sell';
-      if (score <= -1) return 'Sell';
+      if (score >= 2) return 'Strong Buy';
+      if (score >= 0.5) return 'Buy';
+      if (score <= -2) return 'Strong Sell';
+      if (score <= -0.5) return 'Sell';
       return 'Neutral';
-    };
-
-    const initStocks = () => {
-      return INITIAL_INDIAN_STOCKS.map(s => {
-        const price = s.base;
-        const changePct = +(Math.random() * 3.6 - 1.6).toFixed(2);
-        const open = +(price / (1 + changePct / 100)).toFixed(2);
-        const high = +(Math.max(price, open) + price * 0.009).toFixed(2);
-        const low = +(Math.min(price, open) - price * 0.009).toFixed(2);
-        const vwap = +(price * (1 + (Math.random() * 0.006 - 0.003))).toFixed(2);
-        const ema20 = +(price * (1 + (Math.random() * 0.008 - 0.004))).toFixed(2);
-        const rsi = +(38 + Math.random() * 32).toFixed(1);
-        const supertrendDir = price > vwap ? 'BULL' : 'BEAR';
-        const volumeShares = Math.floor(Math.random() * 4500000 + 450000);
-        const signal = evaluateSignal(rsi, price, vwap, ema20, supertrendDir);
-        const week52High = +(price * 1.14).toFixed(2);
-        const week52Low = +(price * 0.76).toFixed(2);
-        return {
-          ...s,
-          price,
-          open,
-          high,
-          low,
-          vwap,
-          ema20,
-          rsi,
-          supertrendDir,
-          changePct,
-          changeVal: +((price * changePct) / 100).toFixed(2),
-          volumeShares,
-          signal,
-          week52High,
-          week52Low,
-          tickDir: 0,
-          candles: generateCandles(price, 20)
-        };
-      });
-    };
-
-    function App() {
-      const [stocks, setStocks] = useState(initStocks);
-      const [isLive, setIsLive] = useState(true);
-      const [search, setSearch] = useState('');
-      const [activeTab, setActiveTab] = useState('screener'); // 'screener' | 'watchlist' | 'alerts' | 'menu'
-      const [preset, setPreset] = useState('All');
-      const [indexFilter, setIndexFilter] = useState('All');
-      const [watchlist, setWatchlist] = useState(['RELIANCE', 'HDFCBANK', 'TCS', 'TATAMOTORS']);
-      const [selectedStock, setSelectedStock] = useState(null);
-      const [viewMode, setViewMode] = useState('cards'); // 'cards' | 'table'
-      const [pwaPrompt, setPwaPrompt] = useState(null);
-
-      // Alerts
-      const [alerts, setAlerts] = useState([
-        { id: 1, symbol: 'RELIANCE', metric: 'Price', condition: 'Above', threshold: 3000 },
-        { id: 2, symbol: 'HDFCBANK', metric: 'RSI', condition: 'Above', threshold: 65 }
-      ]);
-      const [newAlertSymbol, setNewAlertSymbol] = useState('RELIANCE');
-      const [newAlertMetric, setNewAlertMetric] = useState('Price');
-      const [newAlertThreshold, setNewAlertThreshold] = useState('');
-
-      // Catch PWA Install Event
-      useEffect(() => {
-        window.addEventListener('beforeinstallprompt', (e) => {
-          e.preventDefault();
-          setPwaPrompt(e);
-        });
-      }, []);
-
-      const handleInstallPwa = () => {
-        if (pwaPrompt) {
-          pwaPrompt.prompt();
-          pwaPrompt.userChoice.then(() => setPwaPrompt(null));
-        } else {
-          alert("To install: Open browser menu (⋮ on Chrome or Share ⎋ on Safari) and tap 'Add to Home screen' or 'Install App'.");
-        }
-      };
-
-      // Live Ticker simulation
-      useEffect(() => {
-        if (!isLive) return;
-        const timer = setInterval(() => {
-          setStocks(prev => {
-            const count = Math.floor(Math.random() * 3) + 2;
-            const idxs = new Set();
-            while (idxs.size < count) idxs.add(Math.floor(Math.random() * prev.length));
-
-            return prev.map((stk, idx) => {
-              if (!idxs.has(idx)) return { ...stk, tickDir: 0 };
-              const tickPct = (Math.random() * 0.003 - 0.0014);
-              const delta = +(stk.price * tickPct).toFixed(2);
-              const newPrice = +(stk.price + delta).toFixed(2);
-              const newHigh = Math.max(stk.high, newPrice);
-              const newLow = Math.min(stk.low, newPrice);
-              const newChangeVal = +(stk.changeVal + delta).toFixed(2);
-              const newChangePct = +(((newPrice - stk.open) / stk.open) * 100).toFixed(2);
-              const newRsi = +Math.max(15, Math.min(85, stk.rsi + (Math.random() * 0.6 - 0.28))).toFixed(1);
-              const newVwap = +((stk.vwap * 0.998) + (newPrice * 0.002)).toFixed(2);
-              const newSuper = newPrice > newVwap ? 'BULL' : 'BEAR';
-              const newSignal = evaluateSignal(newRsi, newPrice, newVwap, stk.ema20, newSuper);
-
-              return {
-                ...stk,
-                price: newPrice,
-                high: newHigh,
-                low: newLow,
-                changeVal: newChangeVal,
-                changePct: newChangePct,
-                rsi: newRsi,
-                vwap: newVwap,
-                supertrendDir: newSuper,
-                signal: newSignal,
-                tickDir: delta > 0 ? 1 : delta < 0 ? -1 : 0
-              };
-            });
-          });
-        }, 1200);
-        return () => clearInterval(timer);
-      }, [isLive]);
-
-      // Active selected stock lookup
-      const currentSelectedStock = useMemo(() => {
-        if (!selectedStock) return null;
-        return stocks.find(s => s.symbol === selectedStock.symbol) || selectedStock;
-      }, [stocks, selectedStock]);
-
-      // Filtered Stocks
-      const filteredStocks = useMemo(() => {
-        return stocks.filter(s => {
-          if (activeTab === 'watchlist' && !watchlist.includes(s.symbol)) return false;
-          if (search && !s.symbol.toLowerCase().includes(search.toLowerCase()) && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
-          if (indexFilter !== 'All' && s.index !== indexFilter) return false;
-          if (preset === 'Top Gainers' && s.changePct <= 0) return false;
-          if (preset === 'Top Losers' && s.changePct >= 0) return false;
-          if (preset === 'Above VWAP' && s.price <= s.vwap) return false;
-          if (preset === 'RSI < 35' && s.rsi >= 35) return false;
-          if (preset === 'High Delivery' && s.deliveryPct < 55) return false;
-          return true;
-        }).sort((a, b) => {
-          if (preset === 'Top Gainers') return b.changePct - a.changePct;
-          if (preset === 'Top Losers') return a.changePct - b.changePct;
-          if (preset === 'High Delivery') return b.deliveryPct - a.deliveryPct;
-          return b.volumeShares - a.volumeShares;
-        });
-      }, [stocks, activeTab, watchlist, search, indexFilter, preset]);
-
-      const toggleWatchlist = (sym, e) => {
-        e?.stopPropagation();
-        setWatchlist(prev => prev.includes(sym) ? prev.filter(x => x !== sym) : [...prev, sym]);
-      };
-
-      return (
-        <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100 max-w-md mx-auto shadow-2xl relative border-x border-slate-900">
-          {/* MOBILE HEADER */}
-          <header className="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800/80 px-4 py-3 pt-safe">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center font-bold text-white shadow-md shadow-orange-600/30">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                    <polyline points="16 7 22 7 22 13"></polyline>
-                  </svg>
-                </div>
-                <div>
-                  <h1 className="text-base font-extrabold tracking-tight text-white leading-tight">BHARAT TRADE</h1>
-                  <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>NSE Live</span>
-                    <span>•</span>
-                    <span>{stocks.length} Stocks</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons: Live Pause & PWA Install */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setIsLive(!isLive)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1 border transition-all ${
-                    isLive
-                      ? 'bg-emerald-950/80 border-emerald-700 text-emerald-300'
-                      : 'bg-rose-950/80 border-rose-700 text-rose-300'
-                  }`}
-                >
-                  <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-emerald-400' : 'bg-rose-400'}`}></span>
-                  <span>{isLive ? 'LIVE' : 'PAUSED'}</span>
-                </button>
-
-                <button
-                  onClick={handleInstallPwa}
-                  className="px-2.5 py-1 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1 shadow-md shadow-orange-600/20 active:scale-95 transition-transform"
-                >
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Install</span>
-                </button>
-              </div>
-            </div>
-
-            {/* SEARCH BOX */}
-            <div className="mt-3 relative">
-              <svg className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input
-                type="text"
-                placeholder="Search stocks (Reliance, Tata, HDFC)..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-8 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
-              />
-              {search && (
-                <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* QUICK PRESET CHIPS (HORIZONTAL SCROLL) */}
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar mt-2.5 pb-0.5">
-              {[
-                { id: 'All', label: 'All' },
-                { id: 'Top Gainers', label: '🚀 Gainers' },
-                { id: 'Top Losers', label: '📉 Losers' },
-                { id: 'Above VWAP', label: '⚡ Above VWAP' },
-                { id: 'RSI < 35', label: '💎 RSI < 35' },
-                { id: 'High Delivery', label: '📦 Delivery %' }
-              ].map(p => (
-                <button
-                  key={p.id}
-                  onClick={() => setPreset(p.id)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap border transition-all ${
-                    preset === p.id
-                      ? 'bg-orange-600 text-white border-orange-500 shadow-sm'
-                      : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-white'
-                  }`}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </div>
-          </header>
-
-          {/* SUB-BAR: INDEX SELECTOR & VIEW TOGGLE */}
-          <div className="px-4 py-2 bg-slate-900/40 border-b border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
-            <div className="flex items-center gap-1.5">
-              <span>Index:</span>
-              <select
-                value={indexFilter}
-                onChange={e => setIndexFilter(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded px-2 py-0.5 text-xs text-slate-200 focus:outline-none"
-              >
-                <option value="All">All ({stocks.length})</option>
-                <option value="Nifty 50">Nifty 50</option>
-                <option value="Bank Nifty">Bank Nifty</option>
-                <option value="F&O Momentum">F&O Momentum</option>
-              </select>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <span className="font-mono text-[11px] text-orange-400 font-bold">{filteredStocks.length}</span>
-              <span className="text-[11px]">stocks</span>
-            </div>
-          </div>
-
-          {/* MAIN SCROLLABLE CONTENT */}
-          <main className="flex-1 overflow-y-auto p-3 space-y-2.5 pb-24">
-            {activeTab === 'alerts' ? (
-              /* ALERTS TAB CONTENT */
-              <div className="space-y-3">
-                <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800">
-                  <h3 className="text-sm font-bold text-white mb-2">Set Price & Indicator Trigger</h3>
-                  <div className="space-y-2.5 text-xs">
-                    <div>
-                      <label className="text-slate-400 block mb-1">Stock</label>
-                      <select
-                        value={newAlertSymbol}
-                        onChange={e => setNewAlertSymbol(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white"
-                      >
-                        {stocks.map(s => <option key={s.symbol} value={s.symbol}>{s.symbol}</option>)}
-                      </select>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <label className="text-slate-400 block mb-1">Metric</label>
-                        <select
-                          value={newAlertMetric}
-                          onChange={e => setNewAlertMetric(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white"
-                        >
-                          <option value="Price">Price (₹)</option>
-                          <option value="RSI">RSI</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="text-slate-400 block mb-1">Target Value</label>
-                        <input
-                          type="number"
-                          placeholder="e.g. 3050"
-                          value={newAlertThreshold}
-                          onChange={e => setNewAlertThreshold(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-white"
-                        />
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        if (!newAlertThreshold) return;
-                        setAlerts(prev => [...prev, {
-                          id: Date.now(),
-                          symbol: newAlertSymbol,
-                          metric: newAlertMetric,
-                          condition: 'Above',
-                          threshold: parseFloat(newAlertThreshold)
-                        }]);
-                        setNewAlertThreshold('');
-                      }}
-                      className="w-full py-2 bg-orange-600 hover:bg-orange-500 font-bold text-white rounded-lg transition-colors mt-2"
-                    >
-                      Create Alert
-                    </button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">Active Triggers</h4>
-                  {alerts.map(a => (
-                    <div key={a.id} className="bg-slate-900 border border-slate-800 rounded-xl p-3 flex items-center justify-between text-xs">
-                      <div>
-                        <div className="font-bold text-white text-sm">{a.symbol}</div>
-                        <div className="text-slate-400 font-mono text-[11px]">
-                          Trigger when {a.metric} &gt;= {a.threshold}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setAlerts(prev => prev.filter(x => x.id !== a.id))}
-                        className="text-rose-400 p-2 hover:bg-rose-950/40 rounded-lg"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ) : filteredStocks.length === 0 ? (
-              <div className="text-center py-16 text-slate-500 text-xs space-y-2">
-                <p>No stocks match current screening parameters.</p>
-                <button
-                  onClick={() => { setPreset('All'); setIndexFilter('All'); setSearch(''); }}
-                  className="px-3 py-1 bg-orange-950 text-orange-400 rounded-lg border border-orange-800 text-xs"
-                >
-                  Reset All Filters
-                </button>
-              </div>
-            ) : (
-              /* MOBILE TOUCH CARDS (SWIPE & TAP FRIENDLY) */
-              filteredStocks.map(s => {
-                const isPos = s.changePct >= 0;
-                const isStarred = watchlist.includes(s.symbol);
-                const flash = s.tickDir === 1 ? 'border-emerald-500/80 bg-emerald-950/20' : s.tickDir === -1 ? 'border-rose-500/80 bg-rose-950/20' : 'border-slate-800/80 bg-slate-900/60';
-
-                return (
-                  <div
-                    key={s.symbol}
-                    onClick={() => setSelectedStock(s)}
-                    className={`rounded-2xl border p-3.5 transition-all active:scale-[0.98] cursor-pointer shadow-sm ${flash}`}
-                  >
-                    {/* Card Top Row: Symbol, Star, Price & Change */}
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-2">
-                        <button
-                          onClick={e => toggleWatchlist(s.symbol, e)}
-                          className="pt-0.5 text-slate-500 active:scale-125 transition-transform"
-                        >
-                          <svg className={`w-4 h-4 ${isStarred ? 'fill-amber-400 text-amber-400' : 'text-slate-600'}`} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                          </svg>
-                        </button>
-                        <div>
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-bold text-white text-sm tracking-tight">{s.symbol}</span>
-                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-400 font-sans">
-                              {s.sector.split(' ')[0]}
-                            </span>
-                          </div>
-                          <span className="text-[11px] text-slate-400 truncate block max-w-[170px]">{s.name}</span>
-                        </div>
-                      </div>
-
-                      <div className="text-right">
-                        <div className="text-base font-bold font-mono text-white">
-                          ₹{s.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                        </div>
-                        <div className={`text-xs font-mono font-semibold flex items-center justify-end gap-0.5 ${isPos ? 'text-emerald-400' : 'text-rose-400'}`}>
-                          <span>{isPos ? '▲' : '▼'}</span>
-                          <span>{isPos ? '+' : ''}{s.changePct.toFixed(2)}%</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Card Bottom Row: Micro Metrics (VWAP, RSI, Signal, Supertrend) */}
-                    <div className="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
-                      <div className="flex items-center gap-2 font-mono">
-                        <span className="text-slate-400">
-                          VWAP: <strong className={s.price >= s.vwap ? 'text-emerald-400' : 'text-rose-400'}>₹{s.vwap}</strong>
-                        </span>
-                        <span className="text-slate-600">|</span>
-                        <span className="text-slate-400">
-                          RSI: <strong className={s.rsi >= 70 ? 'text-amber-400' : s.rsi <= 30 ? 'text-cyan-400' : 'text-slate-200'}>{s.rsi}</strong>
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-1.5">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                          s.signal.includes('Buy')
-                            ? 'bg-emerald-950/80 text-emerald-300 border-emerald-800'
-                            : s.signal.includes('Sell')
-                            ? 'bg-rose-950/80 text-rose-300 border-rose-800'
-                            : 'bg-slate-800 text-slate-300 border-slate-700'
-                        }`}>
-                          {s.signal}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-          </main>
-
-          {/* BOTTOM NAVIGATION BAR (NATIVE MOBILE FEEL) */}
-          <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-slate-900/95 backdrop-blur-lg border-t border-slate-800 z-40 pb-safe">
-            <div className="grid grid-cols-3 h-14">
-              <button
-                onClick={() => setActiveTab('screener')}
-                className={`flex flex-col items-center justify-center gap-1 transition-colors ${
-                  activeTab === 'screener' ? 'text-orange-500 font-bold' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                <span className="text-[10px]">Screener</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('watchlist')}
-                className={`flex flex-col items-center justify-center gap-1 transition-colors ${
-                  activeTab === 'watchlist' ? 'text-orange-500 font-bold' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill={activeTab === 'watchlist' ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span className="text-[10px]">Watchlist ({watchlist.length})</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('alerts')}
-                className={`flex flex-col items-center justify-center gap-1 transition-colors ${
-                  activeTab === 'alerts' ? 'text-orange-500 font-bold' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
-                <span className="text-[10px]">Alerts ({alerts.length})</span>
-              </button>
-            </div>
-          </nav>
-
-          {/* MOBILE BOTTOM SHEET / DRILLDOWN MODAL */}
-          {currentSelectedStock && (
-            <div className="fixed inset-0 z-50 flex flex-col justify-end bg-black/80 backdrop-blur-sm">
-              <div className="bg-slate-900 border-t border-slate-700 rounded-t-3xl max-h-[85vh] w-full max-w-md mx-auto overflow-y-auto p-4 space-y-4 pb-safe animate-in slide-in-from-bottom duration-200">
-                {/* Pull handle & Close bar */}
-                <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <div className="w-9 h-9 rounded-xl bg-orange-950 border border-orange-800 flex items-center justify-center font-bold text-orange-400 text-xs">
-                      {currentSelectedStock.symbol.slice(0, 3)}
-                    </div>
-                    <div>
-                      <h2 className="text-base font-bold text-white">{currentSelectedStock.symbol}</h2>
-                      <span className="text-[11px] text-slate-400">{currentSelectedStock.name}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <div className="text-right">
-                      <div className="font-mono font-bold text-sm text-white">₹{currentSelectedStock.price}</div>
-                      <div className={`text-[11px] font-mono font-bold ${currentSelectedStock.changePct >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
-                        {currentSelectedStock.changePct >= 0 ? '+' : ''}{currentSelectedStock.changePct.toFixed(2)}%
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setSelectedStock(null)}
-                      className="p-1.5 rounded-full bg-slate-800 text-slate-400 hover:text-white"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                </div>
-
-                {/* 15-MINUTE SVG CANDLESTICK CHART */}
-                <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800">
-                  <div className="flex items-center justify-between mb-2 text-xs">
-                    <span className="font-bold text-slate-300">15-Min Candlesticks</span>
-                    <span className="font-mono text-[10px] text-slate-400">High ₹{currentSelectedStock.high} | Low ₹{currentSelectedStock.low}</span>
-                  </div>
-                  <div className="h-36 w-full">
-                    <svg className="w-full h-full" viewBox="0 0 400 120" preserveAspectRatio="none">
-                      {(() => {
-                        const c = currentSelectedStock.candles;
-                        const minP = Math.min(...c.map(d => d.low));
-                        const maxP = Math.max(...c.map(d => d.high));
-                        const range = maxP - minP || 1;
-                        const getY = val => 110 - ((val - minP) / range) * 100;
-                        const w = 400 / c.length;
-                        return c.map((candle, i) => {
-                          const isGreen = candle.close >= candle.open;
-                          const x = i * w + w / 2;
-                          const yH = getY(candle.high);
-                          const yL = getY(candle.low);
-                          const yO = getY(candle.open);
-                          const yC = getY(candle.close);
-                          const top = Math.min(yO, yC);
-                          const h = Math.max(2, Math.abs(yC - yO));
-                          const color = isGreen ? '#10b981' : '#f43f5e';
-                          return (
-                            <g key={i}>
-                              <line x1={x} y1={yH} x2={x} y2={yL} stroke={color} strokeWidth="1" />
-                              <rect x={x - w * 0.3} y={top} width={w * 0.6} height={h} fill={color} rx="1" />
-                            </g>
-                          );
-                        });
-                      })()}
-                    </svg>
-                  </div>
-                </div>
-
-                {/* INTRADAY BENCHMARKS */}
-                <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                  <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                    <div className="text-slate-400 text-[10px]">Intraday VWAP</div>
-                    <div className="text-sm font-bold text-orange-400">₹{currentSelectedStock.vwap}</div>
-                  </div>
-                  <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                    <div className="text-slate-400 text-[10px]">Supertrend Status</div>
-                    <div className={`text-sm font-bold ${currentSelectedStock.supertrendDir === 'BULL' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                      {currentSelectedStock.supertrendDir === 'BULL' ? 'BULLISH' : 'BEARISH'}
-                    </div>
-                  </div>
-                  <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                    <div className="text-slate-400 text-[10px]">Delivery Volume %</div>
-                    <div className="text-sm font-bold text-slate-200">{currentSelectedStock.deliveryPct}%</div>
-                  </div>
-                  <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                    <div className="text-slate-400 text-[10px]">F&O Lot Size</div>
-                    <div className="text-sm font-bold text-slate-200">{currentSelectedStock.lotSize} Qty</div>
-                  </div>
-                </div>
-
-                {/* CLASSIC PIVOT POINTS */}
-                <div className="bg-slate-950 p-3 rounded-2xl border border-slate-800">
-                  <div className="text-xs font-bold text-slate-300 mb-2">Classic Pivot Levels (NSE)</div>
-                  {(() => {
-                    const h = currentSelectedStock.high;
-                    const l = currentSelectedStock.low;
-                    const c = currentSelectedStock.price;
-                    const pp = +((h + l + c) / 3).toFixed(2);
-                    const r1 = +(2 * pp - l).toFixed(2);
-                    const s1 = +(2 * pp - h).toFixed(2);
-                    return (
-                      <div className="space-y-1 text-xs font-mono">
-                        <div className="flex justify-between text-rose-400"><span>Resistance 1 (R1)</span><span>₹{r1}</span></div>
-                        <div className="flex justify-between text-orange-400 font-bold bg-orange-950/40 px-1.5 py-0.5 rounded"><span>Pivot Point (PP)</span><span>₹{pp}</span></div>
-                        <div className="flex justify-between text-emerald-400"><span>Support 1 (S1)</span><span>₹{s1}</span></div>
-                      </div>
-                    );
-                  })()}
-                </div>
-
-                <button
-                  onClick={() => setSelectedStock(null)}
-                  className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl transition-colors text-xs"
-                >
-                  Close Breakdown
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      );
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    // State
+    let stocks = STOCKS_DATA.map(s => {
+      const changePct = +(Math.random() * 3.6 - 1.6).toFixed(2);
+      const price = +(s.base * (1 + changePct / 100)).toFixed(2);
+      const open = s.base;
+      const high = +(Math.max(price, open) + price * 0.008).toFixed(2);
+      const low = +(Math.min(price, open) - price * 0.008).toFixed(2);
+      const vwap = +(price * (1 + (Math.random() * 0.006 - 0.003))).toFixed(2);
+      const rsi = +(40 + Math.random() * 28).toFixed(1);
+      const supertrend = price > vwap ? 'BULL' : 'BEAR';
+      return {
+        ...s,
+        price,
+        open,
+        high,
+        low,
+        vwap,
+        rsi,
+        supertrend,
+        changePct,
+        signal: calcSignal(rsi, price, vwap),
+        tickDir: 0,
+        candles: makeCandles(price)
+      };
+    });
+
+    let isLive = true;
+    let activeTab = 'screener';
+    let currentPreset = 'All';
+    let currentIndex = 'All';
+    let searchQuery = '';
+    let watchlist = ['RELIANCE', 'HDFCBANK', 'TCS', 'TATAMOTORS'];
+    let selectedStock = null;
+    let deferredInstallPrompt = null;
+
+    // Elements
+    const stockContainer = document.getElementById('stock-list-container');
+    const screenedCountText = document.getElementById('screened-count-text');
+    const toggleStreamBtn = document.getElementById('toggle-stream-btn');
+    const installBtn = document.getElementById('install-pwa-btn');
+    const searchInput = document.getElementById('search-input');
+    const indexSelect = document.getElementById('index-select');
+    const presetChips = document.querySelectorAll('.chip');
+    const modalEl = document.getElementById('stock-modal');
+
+    // Render Function
+    function render() {
+      // Filter list
+      const filtered = stocks.filter(s => {
+        if (activeTab === 'watchlist' && !watchlist.includes(s.symbol)) return false;
+        if (searchQuery && !s.symbol.toLowerCase().includes(searchQuery.toLowerCase()) && !s.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+        if (currentIndex !== 'All' && s.index !== currentIndex) return false;
+        if (currentPreset === 'Top Gainers' && s.changePct <= 0) return false;
+        if (currentPreset === 'Top Losers' && s.changePct >= 0) return false;
+        if (currentPreset === 'Above VWAP' && s.price <= s.vwap) return false;
+        if (currentPreset === 'Oversold' && s.rsi >= 35) return false;
+        if (currentPreset === 'High Delivery' && s.deliveryPct < 55) return false;
+        return true;
+      }).sort((a, b) => {
+        if (currentPreset === 'Top Gainers') return b.changePct - a.changePct;
+        if (currentPreset === 'Top Losers') return a.changePct - b.changePct;
+        if (currentPreset === 'High Delivery') return b.deliveryPct - a.deliveryPct;
+        return 0;
+      });
+
+      screenedCountText.textContent = `Screened: ${filtered.length}`;
+
+      if (filtered.length === 0) {
+        stockContainer.innerHTML = `
+          <div style="text-align:center; padding:50px 20px; color:#64748b; font-size:12px;">
+            <p>No stocks match your current criteria.</p>
+            <button onclick="resetFilters()" style="margin-top:12px; padding:6px 14px; background:#1e293b; border:1px solid #334155; color:#ea580c; border-radius:6px; font-weight:700;">Reset Filters</button>
+          </div>`;
+        return;
+      }
+
+      stockContainer.innerHTML = filtered.map(s => {
+        const isPos = s.changePct >= 0;
+        const isStarred = watchlist.includes(s.symbol);
+        const flashClass = s.tickDir === 1 ? 'flash-up' : s.tickDir === -1 ? 'flash-down' : '';
+        const sigSlug = s.signal.toLowerCase().replace(' ', '-');
+
+        return `
+          <div class="stock-card ${flashClass}" onclick="openModal('${s.symbol}')">
+            <div class="card-top">
+              <div class="stock-info">
+                <button class="star-btn ${isStarred ? 'starred' : ''}" onclick="toggleWatch('${s.symbol}', event)">★</button>
+                <div>
+                  <div style="display:flex; align-items:center;">
+                    <span class="stock-sym">${s.symbol}</span>
+                    <span class="stock-sector">${s.sector.split(' ')[0]}</span>
+                  </div>
+                  <div class="stock-name">${s.name}</div>
+                </div>
+              </div>
+              <div class="price-col">
+                <div class="stock-price mono">₹${s.price.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</div>
+                <div class="stock-change mono ${isPos ? 'up' : 'down'}">
+                  ${isPos ? '▲ +' : '▼ '}${s.changePct.toFixed(2)}%
+                </div>
+              </div>
+            </div>
+            <div class="card-bottom">
+              <div class="card-metrics mono">
+                <span>VWAP: <strong style="color:${s.price >= s.vwap ? '#10b981' : '#f43f5e'}">₹${s.vwap}</strong></span>
+                <span>RSI: <strong>${s.rsi}</strong></span>
+              </div>
+              <span class="badge-signal sig-${sigSlug}">${s.signal}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.resetFilters = function() {
+      currentPreset = 'All';
+      currentIndex = 'All';
+      searchQuery = '';
+      searchInput.value = '';
+      indexSelect.value = 'All';
+      presetChips.forEach(c => c.classList.toggle('active', c.dataset.preset === 'All'));
+      render();
+    };
+
+    window.toggleWatch = function(sym, e) {
+      if (e) e.stopPropagation();
+      if (watchlist.includes(sym)) {
+        watchlist = watchlist.filter(x => x !== sym);
+      } else {
+        watchlist.push(sym);
+      }
+      document.getElementById('watchlist-tab-label').textContent = `Watchlist (${watchlist.length})`;
+      render();
+    };
+
+    window.openModal = function(sym) {
+      selectedStock = stocks.find(s => s.symbol === sym);
+      if (!selectedStock) return;
+
+      document.getElementById('modal-symbol').textContent = selectedStock.symbol;
+      document.getElementById('modal-sector').textContent = selectedStock.sector;
+      document.getElementById('modal-name').textContent = selectedStock.name;
+      document.getElementById('modal-price').textContent = '₹' + selectedStock.price.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+      
+      const changeEl = document.getElementById('modal-change');
+      changeEl.textContent = (selectedStock.changePct >= 0 ? '+' : '') + selectedStock.changePct.toFixed(2) + '%';
+      changeEl.className = 'mono ' + (selectedStock.changePct >= 0 ? 'up' : 'down');
+
+      document.getElementById('modal-hl').textContent = `High: ₹${selectedStock.high} | Low: ₹${selectedStock.low}`;
+      document.getElementById('modal-vwap').textContent = '₹' + selectedStock.vwap;
+      
+      const stEl = document.getElementById('modal-supertrend');
+      stEl.textContent = selectedStock.supertrend === 'BULL' ? 'BULLISH' : 'BEARISH';
+      stEl.style.color = selectedStock.supertrend === 'BULL' ? '#10b981' : '#f43f5e';
+
+      document.getElementById('modal-delivery').textContent = selectedStock.deliveryPct + '%';
+      document.getElementById('modal-lotsize').textContent = selectedStock.lotSize + ' Qty';
+
+      // Pivots
+      const h = selectedStock.high, l = selectedStock.low, c = selectedStock.price;
+      const pp = +((h + l + c) / 3).toFixed(2);
+      const r1 = +(2 * pp - l).toFixed(2);
+      const s1 = +(2 * pp - h).toFixed(2);
+      document.getElementById('modal-pp').textContent = '₹' + pp;
+      document.getElementById('modal-r1').textContent = '₹' + r1;
+      document.getElementById('modal-s1').textContent = '₹' + s1;
+
+      // Draw SVG Candlestick
+      const svg = document.getElementById('candlestick-svg');
+      const candles = selectedStock.candles;
+      const minP = Math.min(...candles.map(c => c.low));
+      const maxP = Math.max(...candles.map(c => c.high));
+      const range = maxP - minP || 1;
+      const w = 400 / candles.length;
+      
+      svg.innerHTML = candles.map((c, i) => {
+        const isGreen = c.close >= c.open;
+        const x = i * w + w / 2;
+        const yH = 100 - ((c.high - minP) / range) * 90;
+        const yL = 100 - ((c.low - minP) / range) * 90;
+        const yO = 100 - ((c.open - minP) / range) * 90;
+        const yC = 100 - ((c.close - minP) / range) * 90;
+        const top = Math.min(yO, yC);
+        const height = Math.max(2, Math.abs(yC - yO));
+        const color = isGreen ? '#10b981' : '#f43f5e';
+        return `
+          <line x1="${x}" y1="${yH}" x2="${x}" y2="${yL}" stroke="${color}" stroke-width="1.2" />
+          <rect x="${x - w * 0.3}" y="${top}" width="${w * 0.6}" height="${height}" fill="${color}" rx="1" />
+        `;
+      }).join('');
+
+      modalEl.style.display = 'flex';
+    };
+
+    function closeModal() {
+      modalEl.style.display = 'none';
+      selectedStock = null;
+    }
+    document.getElementById('modal-close-btn').onclick = closeModal;
+    document.getElementById('modal-dismiss-btn').onclick = closeModal;
+    modalEl.onclick = (e) => { if (e.target === modalEl) closeModal(); };
+
+    // Preset & Search Listeners
+    presetChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        presetChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        currentPreset = chip.dataset.preset;
+        render();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      render();
+    });
+
+    indexSelect.addEventListener('change', (e) => {
+      currentIndex = e.target.value;
+      render();
+    });
+
+    // Navigation Tabs
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTab = btn.dataset.tab;
+        render();
+      });
+    });
+
+    // Live Stream Simulator
+    toggleStreamBtn.onclick = () => {
+      isLive = !isLive;
+      toggleStreamBtn.textContent = isLive ? 'LIVE' : 'PAUSED';
+      toggleStreamBtn.className = isLive ? 'btn-live' : 'btn-live btn-paused';
+    };
+
+    setInterval(() => {
+      if (!isLive) return;
+      const count = Math.floor(Math.random() * 3) + 2;
+      const chosen = new Set();
+      while (chosen.size < count) chosen.add(Math.floor(Math.random() * stocks.length));
+
+      stocks = stocks.map((s, idx) => {
+        if (!chosen.has(idx)) return { ...s, tickDir: 0 };
+        const tickPct = (Math.random() * 0.003 - 0.0014);
+        const delta = +(s.price * tickPct).toFixed(2);
+        const newPrice = +(s.price + delta).toFixed(2);
+        const newHigh = Math.max(s.high, newPrice);
+        const newLow = Math.min(s.low, newPrice);
+        const newChangePct = +(((newPrice - s.open) / s.open) * 100).toFixed(2);
+        const newRsi = +Math.max(15, Math.min(85, s.rsi + (Math.random() * 0.6 - 0.28))).toFixed(1);
+        const newVwap = +((s.vwap * 0.998) + (newPrice * 0.002)).toFixed(2);
+
+        return {
+          ...s,
+          price: newPrice,
+          high: newHigh,
+          low: newLow,
+          changePct: newChangePct,
+          rsi: newRsi,
+          vwap: newVwap,
+          supertrend: newPrice > newVwap ? 'BULL' : 'BEAR',
+          signal: calcSignal(newRsi, newPrice, newVwap),
+          tickDir: delta > 0 ? 1 : delta < 0 ? -1 : 0
+        };
+      });
+
+      render();
+
+      if (selectedStock) {
+        const updated = stocks.find(s => s.symbol === selectedStock.symbol);
+        if (updated) {
+          document.getElementById('modal-price').textContent = '₹' + updated.price.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+          document.getElementById('modal-vwap').textContent = '₹' + updated.vwap;
+        }
+      }
+    }, 1200);
+
+    // PWA Install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.onclick = () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt = null;
+      } else {
+        alert("To install: Tap the 3 dots (⋮) in Chrome's top-right corner and select 'Install app' or 'Add to Home screen'.");
+      }
+    };
+
+    // First render
+    render();
   </script>
 </body>
 </html>
